@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Best Linked Data Suites 2020</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <!--
+      === NOTA BENE ===
+      For the three scripts below, if your spec resides on dev.w3 you can check them
+      out in the same tree and use relative links so that they'll work offline,
+     -->
+    <script
+      src="https://www.w3.org/Tools/respec/respec-w3c-common"
+      class="remove"
+    ></script>
+    <script type="text/javascript" class="remove">
+      var respecConfig = {
+        // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
+        specStatus: "CG-DRAFT",
+
+        // the specification's short name, as in http://www.w3.org/TR/short-name/
+        shortName: "lds-bbs",
+
+        // if you wish the publication date to be other than today, set this
+        // publishDate:  "2009-08-06",
+
+        // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+        // and its maturity status
+        // previousPublishDate:  "1977-03-15",
+        // previousMaturity:  "WD",
+
+        // if there a publicly available Editor's Draft, this is the link
+        edDraftURI: "https://w3c-ccg.github.io/ldp-bbs2020/",
+
+        // if this is a LCWD, uncomment and set the end of its review period
+        // lcEnd: "2009-08-05",
+
+        // if you want to have extra CSS, append them to this list
+        // it is recommended that the respec.css stylesheet be kept
+        //extraCSS:             ["spec.css", "prettify.css"],
+
+        // editors, add as many as you like
+        // only "name" is required
+        editors: [
+          {
+            name: "Tobias Looker",
+            url: "https://mattr.global/",
+            company: "Mattr",
+            companyURL: "https://mattr.global/",
+          },
+          {
+            name: "Orie Steele",
+            url: "https://transmute.industries",
+            company: "Transmute",
+            companyURL: "https://transmute.industries",
+          },
+        ],
+
+        // extend the bibliography entries
+        //localBiblio: webpayments.localBiblio,
+
+        wg: "Credentials Community Group",
+        // URI of the public WG page
+        wgURI: "https://www.w3.org/community/credentials/",
+        // name (with the @w3c.org) of the public mailing to which comments are due
+        wgPublicList: "public-credentials",
+        // URI of the patent status for this WG, for Rec-track documents
+        // !!!! IMPORTANT !!!!
+        // This is important for Rec-track documents, do not copy a patent URI from a random
+        // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
+        // Team Contact.
+        wgPatentURI: "https://www.w3.org/community/about/agreements/cla/",
+
+        otherLinks: [
+          {
+            key: "Source control",
+            data: [
+              {
+                value: "https://github.com/w3c-ccg/ldp-bbs2020/",
+                href: "https://github.com/w3c-ccg/ldp-bbs2020/",
+              },
+            ],
+          },
+          {
+            key: "Issue Tracker",
+            data: [
+              {
+                value: "https://github.com/w3c-ccg/ldp-bbs2020/issues/",
+                href: "https://github.com/w3c-ccg/ldp-bbs2020/issues/",
+              },
+            ],
+          },
+        ],
+
+        // URI of the patent status for this WG, for Rec-track documents
+        // !!!! IMPORTANT !!!!
+        // This is important for Rec-track documents, do not copy a patent URI from a random
+        // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
+        // Team Contact.
+        // wgPatentURI:  "",
+        maxTocLevel: 4,
+        /*preProcess: [ webpayments.preProcess ],
+        alternateFormats: [ {uri: "diff-20111214.html", label: "diff to previous version"} ],
+        */
+        localBiblio: {
+          "RDF-DATASET-NORMALIZATION": {
+            title: "RDF Dataset Normalization 1.0",
+            href: "http://json-ld.github.io/normalization/spec/",
+            authors: ["David Longley", "Manu Sporny"],
+            status: "CGDRAFT",
+            publisher: "JSON-LD Community Group",
+          },
+          "RDF-CONCEPTS": {
+            title: "RDF 1.1 Concepts and Abstract Syntax",
+            href: "https://www.w3.org/TR/rdf11-concepts/",
+            authors: ["Richard Cyganiak", "David Wood", "Markus Lanthaler"],
+            status: "Recommendation",
+            publisher: "W3C",
+          },
+          "RDF-N-Quads": {
+            title: "RDF 1.1 N-Quads",
+            href: "http://json-ld.github.io/normalization/spec/",
+            authors: ["Gaven Carothers"],
+            status: "Recommendation",
+          },
+          "SECURITY-VOCABULARY": {
+            title: "Security Linked Data Vocabulary",
+            href: "https://web-payments.org/vocabs/security",
+            authors: ["Manu Sporny", "David Longley"],
+            status: "CGDRAFT",
+            publisher: "Web Payments Community Group",
+          },
+          "LD-PROOFS": {
+            title: "Linked Data Proofs 1.0",
+            href: "https://w3c-ccg.github.io/ld-proofs",
+            authors: ["David Longley", "Manu Sporny"],
+            status: "CGDRAFT",
+            publisher: "Web Payments Community Group",
+          },
+          "JSON-LD-FRAMING": {
+            title: "JSON-LD 1.1 Framing",
+            href: "https://www.w3.org/TR/json-ld11-framing",
+            authors: [
+              "Dave Longley",
+              "Gregg Kellogg",
+              "Pierre-Antoine Champin",
+            ],
+            status: "Candidate Recommendation",
+            publisher: "W3C",
+          },
+          "PAIRING-FRIENDLY-CURVES": {
+            title: "Pairing-Friendly Curves",
+            href:
+              "https://tools.ietf.org/html/draft-irtf-cfrg-pairing-friendly-curves-03",
+            authors: ["Yumi Sakemi", "Tetsutaro Kobayashi", "Tsunekazu Saito"],
+            status: "Internet Draft",
+            publisher: "IETF",
+          },
+          "SHORT-GROUP-SIGNATURES": {
+            title: "Short group signatures",
+            href: "https://crypto.stanford.edu/~xb/crypto04a/groupsigs.pdf",
+            authors: ["Dan Boneh", "Xavier Boyen", "Hovav Shacham"],
+            status: "Published",
+            publisher: "Advances in Cryptology—CRYPTO 2004",
+          },
+          BBS: {
+            title: "BBS+ Signatures",
+            href: "https://mattrglobal.github.io/bbs-signatures-spec/",
+            authors: ["Michael Lodder", "Tobias Looker"],
+            status: "Draft",
+          },
+          "SHA-3": {
+            title:
+              "SHA-3 Standard: Permutation-Based Has and Extendable-Output Functions",
+            href: "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf",
+            status: "Published",
+            publisher: "NIST",
+          },
+        },
+      };
+    </script>
+    <style>
+      pre .highlight {
+        font-weight: bold;
+        color: green;
+      }
+      pre .comment {
+        font-weight: bold;
+        color: Gray;
+      }
+      .color-text {
+        font-weight: bold;
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+      }
+      ol.algorithm {
+        counter-reset: numsection;
+        list-style-type: none;
+      }
+      ol.algorithm li {
+        margin: 0.5em 0;
+      }
+      ol.algorithm li:before {
+        font-weight: bold;
+        counter-increment: numsection;
+        content: counters(numsection, ".") ") ";
+      }
+    </style>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        This specification describes a set of cryptographic suites created in
+        2020. The suites define representations and interfaces that support
+        digital signatures and encryption.
+      </p>
+    </section>
+
+    <section id="sotd">
+      <p>
+        This is an experimental specification and is undergoing regular
+        revisions. It is not fit for production deployment.
+      </p>
+    </section>
+
+    <section>
+      <h2>Introduction</h2>
+      <p>
+        "We shape our tools, and thereafter our tools shape us."<br />
+        -- Marshall McLuhan
+      </p>
+      <p>
+        These set of suites are designed to addresses the failures of previous
+        specifications and the inability of developers to follow simple
+        instructions.
+      </p>
+
+      <p>
+        The language we have used to describe cryptography has created security
+        issues....
+      </p>
+      <p>
+        More philosphical language goes here....
+      </p>
+    </section>
+
+    <section>
+      <h2>Terminology</h2>
+      <p>
+        This section describes the vocabulary used by this suite. Some
+        vocabulary is used to describe private data, which must not be made
+        public.
+      </p>
+
+      <dl>
+        <dt><dfn>key</dfn></dt>
+        <dd>
+          Generic term refering to cryptographic material. There are symmetric
+          and assymmetric keys.
+        </dd>
+
+        <dt><dfn data-lt="symmetric key | secret key">symmetric key</dfn></dt>
+        <dd>
+          Cryptrographic material that is used to produce encryptions and
+          message authentication codes. Sometimes referred to as a secret key.
+        </dd>
+
+        <dt><dfn data-lt="assymmetric key">assymmetric key</dfn></dt>
+        <dd>
+          Ambigious term for cryptrographic material that is used to produce and
+          verify signatures and derive information used to produce symmetric
+          keys. Used to refer to both the public and private components of a key
+          pair.
+        </dd>
+
+        <dt><dfn>key pair</dfn></dt>
+        <dd>
+          Generic term used to describe key materials which are associated in
+          some way. Commonly used to refer to assymetric cryptographic key
+          material, because they always come in pairs.
+        </dd>
+
+        <dt>
+          <dfn data-lt="private key">private key</dfn>
+        </dt>
+        <dd>
+          The private component of an assymetric key pair, which is commonly
+          used to produce digital signatures and derive bits used to produce
+          symmetric keys.
+        </dd>
+
+        <dt>
+          <dfn data-lt="public key">public key</dfn>
+        </dt>
+        <dd>
+          The public component of an assymetric key pair, which is commonly used
+          to verify digital signatures and derive bits used to produce symmetric
+          keys.
+        </dd>
+        <dt><dfn>signature suite</dfn></dt>
+        <dd>
+          A specified set of cryptographic primitives typically consisting of a
+          canonicalization algorithm, a message digest algorithm, and a
+          signature algorithm that are bundled together by cryptographers for
+          developers for the purposes of safety and convenience.
+        </dd>
+        <dt><dfn>canonicalization algorithm</dfn></dt>
+        <dd>
+          An algorithm that takes an input document that has more than one
+          possible representation and always transforms it into a
+          <a>canonical form</a>. This process is sometimes also called
+          normalization.
+        </dd>
+        <dt><dfn>canonical form</dfn></dt>
+        <dd>
+          The output of applying a <a>canonicalization algorithm</a> to an input
+          document.
+        </dd>
+        <dt>
+          <dfn data-lt="message digest algorithm | message digest algorithms"
+            >message digest algorithm</dfn
+          >
+        </dt>
+        <dd>
+          An algorithm that takes a <a>message</a> and produces a cryptographic
+          output message that is often many orders of magnitude smaller than the
+          input message. These algorithms are often 1) very fast, 2)
+          non-reversible, 3) cause the output to change significantly when even
+          one bit of the input message changes, and 4) make it infeasible to
+          find two different inputs for the same output.
+        </dd>
+        <dt>
+          <dfn data-lt="message digest | message digests">message digest</dfn>
+        </dt>
+        <dd>
+          The result of the application of the
+          <a>message digest algorithm</a> to a <a>message</a>
+        </dd>
+        <dt><dfn>signature algorithm</dfn></dt>
+        <dd>
+          An algorithm that takes an input message and produces an output value
+          where the receiver of the message can mathematically verify that the
+          message has not been modified in transit and came from someone
+          possessing a particular secret.
+        </dd>
+        <dt><dfn>encryption algorithm</dfn></dt>
+        <dd>
+          An algorithm that takes an input message and produces an output value
+          where only the receiver of the output can recover the original message
+          and confirm that the message has not been modified in transit and came
+          from someone possessing a particular secret.
+        </dd>
+        <dt>
+          <dfn data-lt="message | messages">message</dfn>
+        </dt>
+        <dd>
+          The input to a cryptographic operation, such as signing, hashing or
+          encrypting.
+        </dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Interfaces</h2>
+      <p>
+        This section describes the data model and interfaces used by this suite.
+        Some interfaces describe private data, which must not be made public.
+      </p>
+      <section>
+        <h2>Object Oriented</h2>
+        <pre class="idl">
+        [Exposed=Window]
+        interface IKeyPair {
+          readonly attribute Uint8Array privateKey;
+          readonly attribute Uint8Array publicKey;
+          Promise&lt;Uint8Array> sign(Uint8Array message);
+          Promise&lt;boolean> verify(Uint8Array signature);
+          Promise&lt;Uint8Array> deriveBits(Uint8Array remotePublicKey);
+        };
+        </pre>
+
+        <pre class="idl">
+        [Exposed=Window]
+        interface IKeyAgreementKeyPair {
+          readonly attribute Uint8Array privateKey;
+          readonly attribute Uint8Array publicKey;
+          Promise&lt;Uint8Array> deriveBits(Uint8Array remotePublicKey);
+        };
+        </pre>
+
+        <pre class="idl">
+        [Exposed=Window]
+        interface IVerificationKeyPair {
+          readonly attribute Uint8Array privateKey;
+          readonly attribute Uint8Array publicKey;
+          Promise&lt;Uint8Array> sign(Uint8Array message);
+          Promise&lt;boolean> verify(Uint8Array signature);
+        };
+        </pre>
+
+        <pre class="idl">
+        [Exposed=Window]
+        interface IVerificationKey {
+          readonly attribute Uint8Array publicKey;
+          Promise&lt;boolean> verify(Uint8Array signature);
+        };
+        </pre>
+
+        <pre class="idl">
+        [Exposed=Window]
+        interface ISigningKey {
+          readonly attribute Uint8Array privateKey;
+          readonly attribute Uint8Array publicKey;
+          Promise&lt;Uint8Array> sign(Uint8Array message);
+        };
+        </pre>
+
+        <pre class="idl">
+        [Exposed=Window]
+        interface IKeyAgreementDerivationKey {
+          readonly attribute Uint8Array privateKey;
+          readonly attribute Uint8Array publicKey;
+          Promise&lt;Uint8Array> deriveBits(Uint8Array remotePublicKey);
+        };
+        </pre>
+        <pre class="idl">
+        [Exposed=Window]
+        interface IKeyAgreementVerificationKey {
+          readonly attribute Uint8Array publicKey;
+        };
+        </pre>
+      </section>
+      <section>
+        <h2>Functional</h2>
+        <pre class="idl">
+            [Exposed=Window]
+            interface IKeyPairOperations {
+                
+                Promise&lt;Uint8Array> sign(
+                    IKeyPair privateKey, 
+                    Uint8Array message
+                );
+
+                Promise&lt;Uint8Array> deriveBits(
+                    IKeyPair privateKey, 
+                    Uint8Array publicKey
+                );
+
+                Promise&lt;Uint8Array> verify(
+                    IVerificationKey publicKey, 
+                    Uint8Array signature
+                ); 
+            };
+            </pre
+        >
+
+        <pre class="idl">
+            [Exposed=Window]
+            interface IVerificationKeyOperations {
+            
+                Promise&lt;Uint8Array> verify(
+                    IVerificationKey publicKey, 
+                    Uint8Array signature
+                );
+
+            };
+            </pre
+        >
+      </section>
+    </section>
+    <section>
+      <h2>Test Vectors</h2>
+      <p>
+        This section describes the data model and interfaces used by this suite.
+        Some interfaces describe private data, which must not be made public.
+      </p>
+    </section>
+
+    <section id="conformance">
+      <div class="issue">TODO: Add paragraph</div>
+    </section>
+
+    <section>
+      <h2>Security Considerations</h2>
+      <p>
+        The following section describes security considerations that developers
+        implementing this specification should be aware of in order to create
+        secure software.
+      </p>
+
+      <div class="issue">
+        TODO: We need to add a complete list of security considerations.
+      </div>
+    </section>
+  </body>
+</html>
