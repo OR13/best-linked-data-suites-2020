@@ -355,127 +355,555 @@
           The input to a cryptographic operation, such as signing, hashing or
           encrypting.
         </dd>
+
+        <dt>
+          <dfn data-lt="id">id</dfn>
+        </dt>
+        <dd>
+          Used to identify a node in a graph. Dereferencing an id produces a
+          representation of a node. See
+          <a href="https://json-ld.org/spec/latest/json-ld/#node-identifiers"
+            >json-ld.org</a
+          >.
+        </dd>
+
+        <dt>
+          <dfn data-lt="type">type</dfn>
+        </dt>
+        <dd>
+          Used to specify the type of a node in a graph. See
+          <a href="https://json-ld.org/spec/latest/json-ld/#specifying-the-type"
+            >json-ld.org</a
+          >.
+        </dd>
+
+        <dt>
+          <dfn data-lt="base58btc">base58btc</dfn>
+        </dt>
+        <dd>
+          Used to encode public and private key components as
+          <code>publicKeyBase58</code> and <code>privateKeyBase58</code>. See
+          <a
+            href="https://tools.ietf.org/id/draft-multiformats-multibase-00.html#tv-base58btc"
+            >draft-multiformats-multibase</a
+          >.
+        </dd>
+
+        <dt>
+          <dfn data-lt="jwk">jwk</dfn>
+        </dt>
+        <dd>
+          Used to encode public and private key components as
+          <code>publicKeyJwk</code> and <code>privateKeyJwk</code>. See
+          <a href="https://tools.ietf.org/html/rfc7517">rfc7517</a>.
+        </dd>
+
+        <dt>
+          <dfn data-lt="verification method">verification method</dfn>
+        </dt>
+        <dd>
+          A verification method is used to verify a linked data proof. See
+          <a href="https://w3c.github.io/did-core/#verification-methods"
+            >did core</a
+          >.
+        </dd>
+
+        <dt>
+          <dfn data-lt="proof type">proof type</dfn>
+        </dt>
+        <dd>
+          The type of a linked data proof. See
+          <a href="https://w3c-ccg.github.io/ld-proofs/#dfn-proof-type"
+            >linked data proofs</a
+          >.
+        </dd>
+
+        <dt>
+          <dfn data-lt="verification method type">verification method type</dfn>
+        </dt>
+        <dd>
+          A set of parameters required to independently verify the proof, such
+          as an identifier for a public/private key pair that would be used in
+          the proof.. See
+          <a href="https://w3c-ccg.github.io/ld-proofs/#dfn-verification-method"
+            >linked data proof verification-method</a
+          >.
+        </dd>
+
+        <dt>
+          <dfn data-lt="test vectors">test vectors</dfn>
+        </dt>
+        <dd>
+          A set of inputs and expected outputs used to verify the defined
+          functions of a software specification. See
+          <a href="https://tools.ietf.org/html/rfc7520">rfc7520</a>.
+        </dd>
+
+        <dt>
+          <dfn data-lt="cryptographic agility">cryptographic agility</dfn>
+        </dt>
+        <dd>
+          "Crypto-agility (cryptographic agility) is a practice paradigm in
+          designing information security systems that encourages support of
+          rapid adaptations of new cryptographic primitives and algorithms
+          without making significant changes to the system's infrastructure." --
+          <a href="https://en.wikipedia.org/wiki/Crypto-agility">wikipedia</a>
+        </dd>
       </dl>
+    </section>
+    <section>
+      <h2>Information Model</h2>
+
+      <p>
+        The <a>id</a> property of a <a>key pair</a> identifies a node in an
+        information graph which contains both public and private information.
+      </p>
+
+      <p>
+        The <a>type</a> property of a <a>key pair</a> specifies different
+        representations of a node in an information graph.
+      </p>
+
+      <p>
+        It is RECOMMENDED to use the <a>public key</a> or a deterministic
+        transformation of a represenation of it for the purpose of identifying a
+        <a>key pair</a> via <a>id</a>.
+      </p>
+
+      <p>
+        Linked data proofs are nodes in the same information graph as
+        <a>key pairs</a>.
+      </p>
+
+      <p>
+        When a linked data proof is produced, an edge is created between the
+        <a>key pair</a> used to produce the proof, and the proof. This edge is
+        identified in the proof by the property <a>verificationMethod</a>.
+      </p>
+
+      <p>
+        The same <a>key pair</a> MAY be used to create multiple different proof
+        types, by applying different algorithms.
+      </p>
+
+      <p>
+        For example, a <code>type</code> of
+        <code>Ed25519VerificationKey2020</code> might be used in the
+        <a>verification method</a> representation of the public information
+        associated with a key pair, however <code>type</code> of
+        <code>Ed25519VerificationKey2018</code> might also be used for the same
+        graph node. Subsequently, a proof of type
+        <code>Ed25519Signature2020</code>, and one of type
+        <code>Ed25519Signature2018</code> might be produced and linked to the
+        same <a>key pair</a>.
+      </p>
+
+      <p>
+        A <a>key pair</a> and a <a>verification method</a> are different
+        represenations of the same node in a graph. Different representations of
+        a node leverage different <a>type</a> property values to express which
+        subset of the information graph is used by the represenation.
+      </p>
+
+      <p>
+        In simpler language, <a>type</a> is used to distinguish between public
+        and private represenations of a <a>key pair</a>.
+      </p>
+
+      <p>
+        The graph node attribute <a>type</a> is also used to express the
+        intended use of a cryptographic key. For example
+        <code>Ed25519VerificationKey2018</code> for signature verification, and
+        <code>X25519KeyAgreementKey2019</code> for key agreement. However, both
+        represenations can be used to describe the same node in an information
+        graph. For more information see
+        <a href="https://github.com/w3c-ccg/did-method-key"
+          >DID Key Method Spec</a
+        >.
+      </p>
+
+      <p class="note">
+        A <a>verification method</a> use is something like "signing" or
+        "encryption", see
+        <a href="https://www.w3.org/TR/WebCryptoAPI/#dfn-KeyUsage"
+          >WebCrypto KeyUsage</a
+        >.
+      </p>
+
+      <p class="note">
+        A <a>verification method</a> purpose is something like "authentication",
+        or "capabilityInvocation", see
+        <a href="https://w3c.github.io/did-core/#verification-relationships"
+          >DID Core Verification Relationships</a
+        >.
+      </p>
+
+      <p class="advisement">
+        It is RECOMMENDED that linked data proof suites, explictly state if the
+        <a>type</a> of the <a>verification method</a> is limited for a single
+        use and or a single algorithm.
+      </p>
+
+      <p class="advisement">
+        It is NOT RECOMMENDED that the same cryptographic key material be used
+        for multiple purposes.
+      </p>
+
+      <p class="advisement">
+        It is NOT RECOMMENDED that the same cryptographic key material be used
+        with different algorithms for the same purpose.
+      </p>
+    </section>
+    <section>
+      <h2>Interfaces</h2>
+
+      <p>
+        This section describes interfaces used by linked data proof suites. Web
+        IDL and JSON-LD are used to describe a data model and interfaces for
+        representations.
+      </p>
+
+      <section>
+        <h2>
+          Key Pair
+        </h2>
+
+        <p>
+          A linked data key pair describes an assymetric crypographic key, which
+          supports digital signature creation via a private key, public key
+          derivation from a private key, signature verification using the public
+          key, and secret derivation us both public and private key components.
+        </p>
+
+        <p>
+          Anyone who has a private key, can derive the public key, but the
+          opposite is not true. This is the foundation on which digital
+          signatures and key agreement are built, and is the reason that private
+          keys must remain private.
+        </p>
+
+        <p>
+          The <a>type</a> of a linked data key pair allows for control over
+          <a>cryptographic agility</a>. A key pair can be restricted to a
+          limited set of cryptographic algorithms by defining a new
+          <a>type</a> and documenting the restrictions in a
+          <a>signature suite</a>.
+        </p>
+
+        <p class="note">
+          If support for <a>cryptographic agility</a> is desired, a
+          <a>signature suite</a> can rely on an external registry for
+          cryptographic key and algorithms representations and guidance. For
+          example, a suite might reuse the vocabulary defined by
+          <a href="https://www.iana.org/assignments/jose/jose.xhtml"
+            >IANA JOSE</a
+          >.
+        </p>
+
+        <p>
+          The private component of assymetric cryptographic key pairs MUST be
+          protected from accidental or intentional disclosure.
+        </p>
+
+        <p class="note">
+          Linked data key pair representations MAY use
+          <a>base58btc</a> or <a>jwk</a> to represent public and private
+          components of assymetric cryptographic key pairs.
+        </p>
+
+        <pre class="idl">
+         
+          [Exposed=SecureContext]
+          interface KeyPair {
+            attribute ByteString id;
+            attribute ByteString type;
+            attribute ByteString controller;
+            attribute Uint8Array publicKey;
+            attribute Uint8Array privateKey;
+            Promise&lt;Uint8Array> sign(Uint8Array message);
+            Promise&lt;boolean> verify(Uint8Array signature);
+            Promise&lt;Uint8Array> deriveBits(Uint8Array remotePublicKey);
+            LinkedDataKeyPair toLinkedDataKeyPair();
+            LinkedDataVerificationMethod toVerificationMethod();
+          };
+
+          [Exposed=SecureContext]
+          interface LinkedDataKeyPair {
+            attribute ByteString id;
+            attribute ByteString type;
+            attribute ByteString controller;
+            attribute ByteString publicKeyBase58;
+            attribute ByteString privateKeyBase58;
+          };
+            </pre
+        >
+
+        <p class="advisement">
+          It is strongly RECOMMENDED that hardware or software isolation be used
+          to disable read access to the value of
+          <code>privateKey</code> after key pair generation. See the Web Crypto
+          API Crypto Key Interface member
+          <a
+            href="https://www.w3.org/TR/WebCryptoAPI/#dfn-CryptoKey-slot-extractable"
+            >extractable</a
+          >.
+        </p>
+
+        <p class="advisement">
+          It is strongly RECOMMENDED that representations of linked data key
+          pairs be encrypted in transit and at rest.
+        </p>
+
+        <p class="advisement">
+          It is strongly RECOMMENDED that concrete implementations of
+          <a>LinkedDataKeyPair</a> mark all attributes private or protected, and
+          that <code>toVerificationMethod()</code> be used to produce a public
+          key verification method suitable for signature verification and key
+          agreement.
+        </p>
+
+        <p>Here are a few non normative examples of <a>key pairs</a>:</p>
+
+        <pre class="example" title="Non cryptographically agile example">
+          {
+            "id": "#z6Mkf5rGMoatrSj1f4CyvuHBeXJELe9RPdzo2PKGNCKVtZxP",
+            "type": "Ed25519LinkedDataKeyPair2020",
+            "controller": "did:key:z6Mkf5rGMoatrSj1f4CyvuHBeXJELe9RPdzo2PKGNCKVtZxP",
+            "publicKeyBase58": "dbDmZLTWuEYYZNHFLKLoRkEX4sZykkSLNQLXvMUyMB1",
+            "privateKeyBase58": "47QbyJEDqmHTzsdg8xzqXD8gqKuLufYRrKWTmB7eAaWHG2EAsQ2GUyqRqWWYT15dGuag52Sf3j4hs2mu7w52mgps"
+          }
+          </pre
+        >
+
+        <pre class="example" title="Cryptographically agile example">
+          {
+            "id": "did:example:123#_Qq0UL2Fq651Q0Fjd6TvnYE-faHiOpRlPVQcY_-tA4A",
+            "type": "JsonWebKey2020",
+            "controller": "did:example:123",
+            "publicKeyJwk": {
+              "kty": "OKP",
+              "crv": "Ed25519",
+              "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ"
+            },
+            "privateKeyJwk": {
+              "kty": "OKP",
+              "crv": "Ed25519",
+              "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ",
+              "d": "tP7VWE16yMQWUO2G250yvoevfbfxY25GjHglTP3ZOyU"
+            }
+          }
+          </pre
+        >
+      </section>
+
+      <section>
+        <h2>Verification Method</h2>
+
+        <p>
+          A verification method is used to verify linked data proofs.
+        </p>
+
+        <p>
+          When a proof is a form of digitial signature, a verification method is
+          a representation of a public key.
+        </p>
+
+        <p>
+          The <a>type</a> of a verification method allows for control over
+          <a>cryptographic agility</a>. A public key can be restricted to a
+          limited set of cryptographic algorithms by defining a new
+          <a>type</a> and documenting the restrictions in a
+          <a>signature suite</a>.
+        </p>
+
+        <p class="note">
+          If support for <a>cryptographic agility</a> is desired, a
+          <a>signature suite</a> can rely on an external registry for
+          cryptographic key and algorithms representations and guidance. For
+          example, a suite might reuse the vocabulary defined by
+          <a href="https://www.iana.org/assignments/jose/jose.xhtml"
+            >IANA JOSE</a
+          >.
+        </p>
+
+        <p class="note">
+          A linked data verification method representation MAY use
+          <a>base58btc</a> or <a>jwk</a> to represent public and private
+          components of assymetric cryptographic key pairs.
+        </p>
+
+        <pre class="idl">
+            [Exposed=Window]
+            interface PublicKey {
+              attribute ByteString id;
+              attribute ByteString type;
+              attribute ByteString controller;
+              attribute Uint8Array publicKey;
+              Promise&lt;boolean> verify(Uint8Array signature);
+            };
+
+            [Exposed=Window]
+            interface LinkedDataVerificationMethod {
+              attribute ByteString id;
+              attribute ByteString type;
+              attribute ByteString controller;
+              attribute ByteString publicKeyBase58;
+            };
+            </pre
+        >
+
+        <p class="advisement">
+          It is RECOMMENDED that <code>type</code> to used to restrict the
+          verification method to a specific cryptographic key type and signature
+          / proof algorithm.
+        </p>
+
+        <p class="advisement">
+          PII or other information that might be used for correlation should be
+          excluded from the <code>id</code> and public key representation member
+          of <a>verification methods</a>.
+        </p>
+
+        <p>
+          A linked data verification method representation MAY use
+          <a>base58btc</a> or <a>jwk</a> to represent public and private
+          components of assymetric cryptographic key pairs.
+        </p>
+
+        <p>
+          Here are a few non normative examples of <a>verification methods</a>:
+        </p>
+
+        <pre class="example" title="Non cryptographically agile example">
+            {
+              "id": "#z6Mkf5rGMoatrSj1f4CyvuHBeXJELe9RPdzo2PKGNCKVtZxP",
+              "type": "Ed25519VerificationMethod2020",
+              "controller": "did:example:123",
+              "publicKeyBase58": "dbDmZLTWuEYYZNHFLKLoRkEX4sZykkSLNQLXvMUyMB1"
+            }
+        </pre>
+
+        <pre class="example" title="Cryptographically agile example">
+ 
+          {
+            "id": "#key-0",
+            "type": "JsonWebKey2020",
+            "controller": "did:example:123",
+            "publicKeyJwk": {
+              "kty": "OKP",
+              "crv": "Ed25519",
+              "x": "VCpo2LMLhn6iWku8MKvSLg2ZAoC-nlOyPVQaO3FxVeQ"
+            }
+          }
+      </pre
+        >
+      </section>
     </section>
 
     <section>
-      <h2>Interfaces</h2>
+      <h2>Suite Definition</h2>
       <p>
-        This section describes the data model and interfaces used by this suite.
-        Some interfaces describe private data, which must not be made public.
+        A linked data proof suite MUST define at least 1
+        <a>verification method type</a> <code>type</code>.
       </p>
-      <section>
-        <h2>Object Oriented</h2>
-        <pre class="idl">
-        [Exposed=Window]
-        interface IKeyPair {
-          readonly attribute Uint8Array privateKey;
-          readonly attribute Uint8Array publicKey;
-          Promise&lt;Uint8Array> sign(Uint8Array message);
-          Promise&lt;boolean> verify(Uint8Array signature);
-          Promise&lt;Uint8Array> deriveBits(Uint8Array remotePublicKey);
-        };
-        </pre>
+      <p>
+        A linked data proof suite MUST define at least 1 <a>proof type</a>
+        <code>type</code>.
+      </p>
 
-        <pre class="idl">
-        [Exposed=Window]
-        interface IKeyAgreementKeyPair {
-          readonly attribute Uint8Array privateKey;
-          readonly attribute Uint8Array publicKey;
-          Promise&lt;Uint8Array> deriveBits(Uint8Array remotePublicKey);
-        };
-        </pre>
+      <p>
+        A linked data proof suite MUST provide at least 1 JSON-LD represenation
+        of a <a>key pair</a> associated with every
+        <a>verification method type</a> it defines.
+      </p>
 
-        <pre class="idl">
-        [Exposed=Window]
-        interface IVerificationKeyPair {
-          readonly attribute Uint8Array privateKey;
-          readonly attribute Uint8Array publicKey;
-          Promise&lt;Uint8Array> sign(Uint8Array message);
-          Promise&lt;boolean> verify(Uint8Array signature);
-        };
-        </pre>
+      <p>
+        A linked data proof suite MUST define the relationship between each
+        defined
+        <a>verification method type</a> and <a>proof type</a>.
+      </p>
 
-        <pre class="idl">
-        [Exposed=Window]
-        interface IVerificationKey {
-          readonly attribute Uint8Array publicKey;
-          Promise&lt;boolean> verify(Uint8Array signature);
-        };
-        </pre>
+      <p>A linked data proof suite MUST provide <a>test vectors</a>.</p>
 
-        <pre class="idl">
-        [Exposed=Window]
-        interface ISigningKey {
-          readonly attribute Uint8Array privateKey;
-          readonly attribute Uint8Array publicKey;
-          Promise&lt;Uint8Array> sign(Uint8Array message);
-        };
-        </pre>
+      <p>A linked data proof suite MAY support <a>cryptographic agility</a>.</p>
 
-        <pre class="idl">
-        [Exposed=Window]
-        interface IKeyAgreementDerivationKey {
-          readonly attribute Uint8Array privateKey;
-          readonly attribute Uint8Array publicKey;
-          Promise&lt;Uint8Array> deriveBits(Uint8Array remotePublicKey);
-        };
-        </pre>
-        <pre class="idl">
-        [Exposed=Window]
-        interface IKeyAgreementVerificationKey {
-          readonly attribute Uint8Array publicKey;
-        };
-        </pre>
-      </section>
-      <section>
-        <h2>Functional</h2>
-        <pre class="idl">
-            [Exposed=Window]
-            interface IKeyPairOperations {
-                
-                Promise&lt;Uint8Array> sign(
-                    IKeyPair privateKey, 
-                    Uint8Array message
-                );
-
-                Promise&lt;Uint8Array> deriveBits(
-                    IKeyPair privateKey, 
-                    Uint8Array publicKey
-                );
-
-                Promise&lt;Uint8Array> verify(
-                    IVerificationKey publicKey, 
-                    Uint8Array signature
-                ); 
-            };
-            </pre
-        >
-
-        <pre class="idl">
-            [Exposed=Window]
-            interface IVerificationKeyOperations {
-            
-                Promise&lt;Uint8Array> verify(
-                    IVerificationKey publicKey, 
-                    Uint8Array signature
-                );
-
-            };
-            </pre
-        >
-      </section>
+      <p>
+        A linked data proof suite MAY support
+        <a>verification method types</a> defined by other
+        <a> signature suites</a>.
+      </p>
     </section>
+
     <section>
       <h2>Test Vectors</h2>
       <p>
-        This section describes the data model and interfaces used by this suite.
-        Some interfaces describe private data, which must not be made public.
+        This section describes test data used to ensure spec conformance and
+        interoperability.
       </p>
+
+      <p class="note">
+        Relative URIs may be used for the value of <a>id</a>, with the use of
+        <code>@base</code>. See
+        <a
+          href="https://json-ld.org/spec/latest/json-ld/#syntax-tokens-and-keywords"
+          >json-ld.org</a
+        >.
+      </p>
+
+      <pre class="example" title="Ed25519 Key Pair">
+        {
+          "id": "#z6Mkf5rGMoatrSj1f4CyvuHBeXJELe9RPdzo2PKGNCKVtZxP",
+          "type": "Ed25519LinkedDataKeyPair2020",
+          "controller": "did:key:z6Mkf5rGMoatrSj1f4CyvuHBeXJELe9RPdzo2PKGNCKVtZxP",
+          "publicKeyBase58": "dbDmZLTWuEYYZNHFLKLoRkEX4sZykkSLNQLXvMUyMB1",
+          "privateKeyBase58": "47QbyJEDqmHTzsdg8xzqXD8gqKuLufYRrKWTmB7eAaWHG2EAsQ2GUyqRqWWYT15dGuag52Sf3j4hs2mu7w52mgps"
+        } 
+      </pre>
+
+      <pre class="example" title="Ed25519 Verification Method">
+        {
+          "id": "did:key:z6Mkf5rGMoatrSj1f4CyvuHBeXJELe9RPdzo2PKGNCKVtZxP#z6Mkf5rGMoatrSj1f4CyvuHBeXJELe9RPdzo2PKGNCKVtZxP",
+          "type": "Ed25519VerificationKey2020",
+          "controller": "did:key:z6Mkf5rGMoatrSj1f4CyvuHBeXJELe9RPdzo2PKGNCKVtZxP",
+          "publicKeyBase58": "dbDmZLTWuEYYZNHFLKLoRkEX4sZykkSLNQLXvMUyMB1"
+        }        
+      </pre>
+
+      <pre class="example" title="Ed25519 Linked Data Proof">
+        {
+          "@context": [
+            "https://www.w3.org/2018/credentials/v1",
+            "https://www.w3.org/2018/credentials/examples/v1"
+          ],
+          "id": "http://example.gov/credentials/3732",
+          "type": ["VerifiableCredential", "UniversityDegreeCredential"],
+          "issuer": {
+            "id": "did:key:z6Mkf5rGMoatrSj1f4CyvuHBeXJELe9RPdzo2PKGNCKVtZxP"
+          },
+          "issuanceDate": "2020-03-10T04:24:12.164Z",
+          "credentialSubject": {
+            "id": "did:example:456",
+            "degree": {
+              "type": "BachelorDegree",
+              "name": "Bachelor of Science and Arts"
+            }
+          },
+          "proof": {
+            "type": "Ed25519Signature2020",
+            "created": "2020-03-10T04:24:12.164Z",
+            "signatureValue": "4ohH8BvL3fTjNhJJC8bSr7ap6a5C6rHEWersgK6jsSCEWev6mYYNKS2SiprssYmw1a4TE4rMyP6ah6LdoWNsmiNV",
+            "proofPurpose": "assertionMethod",
+            "verificationMethod": "did:key:z6Mkf5rGMoatrSj1f4CyvuHBeXJELe9RPdzo2PKGNCKVtZxP#z6Mkf5rGMoatrSj1f4CyvuHBeXJELe9RPdzo2PKGNCKVtZxP"
+          }
+        }               
+      </pre>
     </section>
 
     <section id="conformance">
-      <div class="issue">TODO: Add paragraph</div>
+      <div class="issue">
+        TODO: This specification has no consensus, and should note be relied on
+        by anyone.
+      </div>
     </section>
 
     <section>
@@ -484,6 +912,12 @@
         The following section describes security considerations that developers
         implementing this specification should be aware of in order to create
         secure software.
+      </p>
+
+      <p class="advisement">
+        If a private key is disclosed, digital signatures associated with the
+        public key cannot be trusted. Mechanisms for revoking public keys, or
+        mitigating private key compromisse are out of scope for this spec.
       </p>
 
       <div class="issue">
